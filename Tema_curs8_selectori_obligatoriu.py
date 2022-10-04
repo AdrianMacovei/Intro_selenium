@@ -4,6 +4,7 @@ from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
 from webdriver_manager.chrome import ChromeDriverManager
 from time import sleep
+import pytest
 
 """ Site used for this homework: http://automationpractice.com/index.php"""
 
@@ -182,15 +183,14 @@ sleep(2)
 # app_store.click()
 
 def input_credentials(placeholder, input_value):
-    input = browser.find_element(by=By.XPATH, value=f"//input[@placeholder='Enter your {placeholder}']")
-    input.click()
-    input.send_keys(input_value)
+    input_cr = browser.find_element(by=By.XPATH, value=f"//input[@placeholder='Enter your {placeholder}']")
+    input_cr.send_keys(input_value)
 
 
-input_credentials("email", "adrianmacove")
-input_credentials("password", "123456789")
-login = browser.find_element(by=By.XPATH, value="//*[@id='root']/div/div[2]/form/div/div[3]")
-
-assert login.click(), "Wrong credentials!"
-
-sleep(4)
+input_credentials("email", "adrianmacovei17@gmail.com")
+input_credentials("password", "")
+sleep(2)
+login = browser.find_element(by=By.XPATH, value="//button[@type='submit']")
+assert login.is_enabled(), "Login must be enabled"
+sleep(1)
+browser.quit()
