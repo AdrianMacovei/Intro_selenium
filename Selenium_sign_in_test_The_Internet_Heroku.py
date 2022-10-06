@@ -1,4 +1,5 @@
 from selenium import webdriver
+from selenium.common import NoSuchElementException
 from selenium.webdriver.chrome.service import Service as ChromeService
 from selenium.webdriver.common.by import By
 from webdriver_manager.chrome import ChromeDriverManager
@@ -15,6 +16,7 @@ class LoginTest(unittest.TestCase):
         self.chrome.get("https://the-internet.herokuapp.com")
         self.chrome.find_element(by=By.XPATH, value="//a[normalize-space()='Form Authentication']").click()
         self.chrome.maximize_window()
+        self.chrome.fullscreen_window()
         self.chrome.implicitly_wait(10)
 
     def tearDown(self) -> None:
@@ -57,18 +59,34 @@ class LoginTest(unittest.TestCase):
                         "Invalid message error!")
 
     def test_quit_error_invalid_credentials(self):  # TEST 8
+        # first try
+        # self.chrome.find_element(by=By.XPATH, value="//button[@type='submit']").click()
+        # sleep(1)
+        # # error_message = self.chrome.find_element(by=By.XPATH, value="//div[@id='flash']")
+        # self.chrome.find_element(by=By.CLASS_NAME, value="close").click()
+        # sleep(2)
+        # # I had some problem here because the web object disappeare when pres quit button so the selenium can't find it
+        # # self.assertFalse(self.chrome.find_element(by=By.CLASS_NAME, value="close").is_enabled())
+        # web_objects = self.chrome.find_elements(by=By.XPATH, value="//div[@id='flash']")
+        # self.assertListEqual(web_objects, [])
+
+        # second try
         self.chrome.find_element(by=By.XPATH, value="//button[@type='submit']").click()
         sleep(1)
-        # error_message = self.chrome.find_element(by=By.XPATH, value="//div[@id='flash']")
         self.chrome.find_element(by=By.CLASS_NAME, value="close").click()
         sleep(2)
-        # I had some problem here because the web object disappeare when pres quit button so the selenium can't find it
-        # self.assertFalse(self.chrome.find_element(by=By.CLASS_NAME, value="close").is_enabled())
-        web_objects = self.chrome.find_elements(by=By.XPATH, value="//div[@id='flash']")
-        self.assertListEqual(web_objects, [])
+        # for more efficiency we can find his parent first after to search only there
+        try:
+            self.chrome.find_element(by=By.XPATH, value="//body/div[1]").find_element(by=By.XPATH,
+                                                                                      value="//div[@id='flash']")
+            exist = True
+        except NoSuchElementException:
+            exist = False
+        self.assertFalse(exist, "Message should not be displayed!")
 
     def test_label_text(self):  # TEST 9
         label_list = self.chrome.find_elements(by=By.XPATH, value="//label")
+        print("Test label text")
         self.assertEqual(label_list[0].text, "Username")
         self.assertEqual(label_list[1].text, "Password")
 
