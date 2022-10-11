@@ -29,7 +29,7 @@ class PasswordBreaker(unittest.TestCase):
     def tearDown(self) -> None:
         self.chrome.quit()
 
-    def test_list_breeker_password(self):
+    def test_list_breaker_password(self):
         self.chrome.find_element(by=By.ID, value="username").send_keys("tomsmith")
         h4_element = self.chrome.find_element(by=By.XPATH, value="//h4[@class='subheader']")
         h4_element_text = h4_element.text
