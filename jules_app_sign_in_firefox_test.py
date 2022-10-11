@@ -4,11 +4,14 @@ from selenium.webdriver.common.by import By
 from time import sleep
 from selenium.webdriver.common.keys import Keys
 import unittest
-#'C:\Users\Adrian\Downloads\geckodriver.exe'
-class SignInTest(unittest.TestCase):
+
+
+class SignInTestGecko(unittest.TestCase):
 
     def setUp(self) -> None:
-        self.browser = webdriver.Firefox(executable_path="C:/Users/Adrian/PycharmProjects/Intro_Selenium/geckodriver.exe")
+        #  on executable path need to be put the path to geckodriver from your computer
+        self.browser = webdriver.Firefox(executable_path="C:/Users/Adrian/PycharmProjects/"
+                                                         "Intro_Selenium/geckodriver.exe")
         self.browser.get("https://jules.app/sign-in")
         self.browser.maximize_window()
         self.browser.implicitly_wait(10)
@@ -119,8 +122,8 @@ class SignInTest(unittest.TestCase):
         self.browser.switch_to.window(tabs[1])
 
         self.assertEqual(self.browser.current_url, "https://play.google.com/store/apps/details?id=app.jules."
-                                                  "mobile&pcampaignid=MKT-Other-global-all-co-"
-                                                  "prtnr-py-PartBadge-Mar2515-1", "Invalid link!")
+                                                   "mobile&pcampaignid=MKT-Other-global-all-co-"
+                                                   "prtnr-py-PartBadge-Mar2515-1", "Invalid link!")
 
     def test_FAQ_link(self) -> None:
         self.browser.find_element(by=By.XPATH, value="//span[normalize-space()='FAQ']").click()
