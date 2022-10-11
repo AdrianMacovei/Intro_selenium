@@ -1,2 +1,7 @@
 venv/
 .idea/
+.geckodriver.exe
+.geckodriver.log
+.testare12_cod.py
+.pytest_cache/
+reports/
