@@ -32,14 +32,12 @@ class SignInTest(unittest.TestCase):
 
     def test_wrong_email_message(self) -> None:
         self.chrome.find_element(by=By.XPATH, value="//input[@placeholder='Enter your email']").send_keys("dfsdfsdfds")
-        self.chrome.implicitly_wait(3)
         self.assertTrue(self.chrome.find_element
                         (by=By.TAG_NAME, value="p").is_displayed(), "Please enter a valid email address! not displayed")
 
     def test_error_message_when_email_is_correct_foramt(self) -> None:
         self.chrome.find_element(by=By.XPATH, value="//input[@placeholder='Enter your email']")\
             .send_keys("myemail@gmail.com")
-        self.chrome.implicitly_wait(3)
         try:
             self.chrome.find_element(by=By.TAG_NAME, value="p")
             exist = True
@@ -70,9 +68,8 @@ class SignInTest(unittest.TestCase):
         messsage_password.send_keys(Keys.CONTROL + "a")
         messsage_password.send_keys(Keys.DELETE)
 
-        self.assertTrue(self.chrome.find_element
-                        (by=By.XPATH, value="//p[@class='MuiFormHelperText-root MuiFormHelperText-contained']")
-                        .is_displayed(), "Error message should appear")
+        self.assertTrue(self.chrome.find_element(by=By.TAG_NAME, value="p").is_displayed(),
+                        "Error message should appear")
 
     def test_eye_icon_not_activated_until_pressed(self) -> None:
         pwd = self.chrome.find_element(by=By.XPATH, value="//input[@placeholder='Enter your password']")

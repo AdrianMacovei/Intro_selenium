@@ -16,7 +16,6 @@ class LoginTest(unittest.TestCase):
         self.chrome.get("https://the-internet.herokuapp.com")
         self.chrome.find_element(by=By.XPATH, value="//a[normalize-space()='Form Authentication']").click()
         self.chrome.maximize_window()
-        self.chrome.fullscreen_window()
         self.chrome.implicitly_wait(10)
 
     def tearDown(self) -> None:
@@ -134,7 +133,6 @@ class PasswordBreaker(unittest.TestCase):
         potential_passwords = h4_element_text.split(" ")  # 30 words
         for i in range(len(potential_passwords)):
             self.chrome.refresh()
-            self.chrome.implicitly_wait(5)
             self.chrome.find_element(by=By.ID, value="username").send_keys("tomsmith")
             self.chrome.find_element(by=By.ID, value="password").send_keys(f"{potential_passwords[i]}")
             self.chrome.find_element(by=By.XPATH, value="//button[@type='submit']").click()
