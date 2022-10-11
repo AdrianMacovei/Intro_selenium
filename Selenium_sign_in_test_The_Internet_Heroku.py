@@ -131,15 +131,15 @@ class PasswordBreaker(unittest.TestCase):
         self.chrome.find_element(by=By.ID, value="username").send_keys("tomsmith")
         h4_element = self.chrome.find_element(by=By.XPATH, value="//h4[@class='subheader']")
         h4_element_text = h4_element.text
-        list_words = h4_element_text.split(" ")  # 30 words
-        for i in range(len(list_words)):
+        potential_passwords = h4_element_text.split(" ")  # 30 words
+        for i in range(len(potential_passwords)):
             self.chrome.refresh()
             self.chrome.implicitly_wait(5)
             self.chrome.find_element(by=By.ID, value="username").send_keys("tomsmith")
-            self.chrome.find_element(by=By.ID, value="password").send_keys(f"{list_words[i]}")
+            self.chrome.find_element(by=By.ID, value="password").send_keys(f"{potential_passwords[i]}")
             self.chrome.find_element(by=By.XPATH, value="//button[@type='submit']").click()
             if self.chrome.current_url == "https://the-internet.herokuapp.com/secure":
-                print(f"\nParola secretă este [{list_words[i]}].")
+                print(f"\nParola secretă este [{potential_passwords[i]}].")
                 break
-            elif i == len(list_words) - 1:
+            elif i == len(potential_passwords) - 1:
                 print("\nNu am reușit să găsesc parola!")
