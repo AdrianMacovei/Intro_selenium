@@ -9,9 +9,8 @@ import unittest
 class SignInTestGecko(unittest.TestCase):
 
     def setUp(self) -> None:
-        #  on executable path need to be put the path to geckodriver from your computer
-        self.browser = webdriver.Firefox(executable_path="C:/Users/Adrian/PycharmProjects/"
-                                                         "Intro_Selenium/geckodriver.exe")
+        #  on executable path need to be put the path to geckodriver from your computer(executable_path = "path to browser webdriver")
+        self.browser = webdriver.Firefox()
         self.browser.get("https://jules.app/sign-in")
         self.browser.maximize_window()
         self.browser.implicitly_wait(10)
@@ -109,7 +108,7 @@ class SignInTestGecko(unittest.TestCase):
         # this 2 line of code change the primary chrome windows to new open tab
         tabs = self.browser.window_handles
         self.browser.switch_to.window(tabs[1])
-        sleep(1)
+        sleep(2)
         self.assertEqual(self.browser.current_url, "https://apps.apple.com/us/app/jules-mobile/id1443574567",
                          "Invalid link!")
 
@@ -134,7 +133,7 @@ class SignInTestGecko(unittest.TestCase):
 
         self.assertEqual(self.browser.current_url, "https://static.jules.app/faq.html", "Invalid link!")
 
-    def test_termandconditions_link(self) -> None:
+    def test_term_and_conditions_link(self) -> None:
         self.browser.find_element(by=By.XPATH, value="//span[normalize-space()='TERMS & CONDITIONS']").click()
         sleep(2)
 
