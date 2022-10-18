@@ -4,6 +4,8 @@ from selenium.webdriver.common.by import By
 from time import sleep
 from selenium.webdriver.common.keys import Keys
 import unittest
+from selenium.webdriver.edge.service import Service as EdgeService
+from webdriver_manager.microsoft import EdgeChromiumDriverManager
 
 
 class SignInTestEdge(unittest.TestCase):
@@ -22,7 +24,8 @@ class SignInTestEdge(unittest.TestCase):
     INVALID_LINK_MESSAGE = "Invalid link!"
 
     def setUp(self) -> None:
-        self.browser = webdriver.Edge()
+        service = EdgeService(EdgeChromiumDriverManager().install())
+        self.browser = webdriver.Edge(service=service)
         self.browser.get(self.SIGN_IN_URL)
         self.browser.maximize_window()
         self.browser.implicitly_wait(10)

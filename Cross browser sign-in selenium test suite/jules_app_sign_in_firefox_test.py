@@ -4,6 +4,8 @@ from selenium.webdriver.common.by import By
 from time import sleep
 from selenium.webdriver.common.keys import Keys
 import unittest
+from selenium.webdriver.firefox.service import Service as FirefoxService
+from webdriver_manager.firefox import GeckoDriverManager
 
 
 class SignInTestGecko(unittest.TestCase):
@@ -14,7 +16,7 @@ class SignInTestGecko(unittest.TestCase):
     FORGOT_PWD_URL = "https://jules.app/forgot-password"
     SIGN_UP_URL = "https://jules.app/sign-up"
     JULES_APPSTORE_URL = "https://apps.apple.com/us/app/jules-mobile/id1443574567"
-    JULES_GPLAY_URL = "https://play.google.com/store/apps/details?id=app.jules.mobile&pcampaignid=MKT-Other-global-all" \
+    JULES_GPLAY_URL = "https://play.google.com/store/apps/details?id=app.jules.mobile&pcampaignid=MKT-Other-global-all"\
                       "-co-prtnr-py-PartBadge-Mar2515-1"
     FAQ_URL = "https://static.jules.app/faq.html"
     TERMS_URL = "https://static.jules.app/terms_of_use.html"
@@ -22,8 +24,8 @@ class SignInTestGecko(unittest.TestCase):
     INVALID_LINK_MESSAGE = "Invalid link!"
 
     def setUp(self) -> None:
-        #  on executable path need to be put the path to geckodriver from your computer(executable_path = "path to browser webdriver")
-        self.browser = webdriver.Firefox()
+        service = FirefoxService(GeckoDriverManager().install())
+        self.browser = webdriver.Firefox(service=service)
         self.browser.get("https://jules.app/sign-in")
         self.browser.maximize_window()
         self.browser.implicitly_wait(10)
