@@ -3,5 +3,4 @@ venv/
 geckodriver.log
 .pytest_cache/
 browserdriver/
-.testare_code.py
 .pytest_cache/
